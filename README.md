@@ -6,12 +6,12 @@ This Python-based Database Administrator program provides a user-friendly interf
 
 ## Sections
 
-- [Database Administrator - Front End]
-- [Database Connection]
-- [Database Management]
-- [SQL Operations]
-- [File Operations]
-- [Main Functionality]
+- **Database Administrator - Front End**
+- **Database Connection**
+- **Database Management**
+- **SQL Operations**
+- **File Operations**
+- **Main Functionality**
 
 --------------------------------------------------------------------------------------------------
 
@@ -61,10 +61,10 @@ The MSSQL Database Schema presented here defines the structure of a social media
 
 ## Sections
 
-- [User Management]
-- [Content Management]
-- [Interaction and Engagement]
-- [Metadata and Logging]
+- **User Management**
+- **Content Management**
+- **Interaction and Engagement**
+- **Metadata and Logging**
 
 --------------------------------------------------------------------------------------------------
 
@@ -72,35 +72,35 @@ The MSSQL Database Schema presented here defines the structure of a social media
 
 The user management section defines tables related to user profiles, authentication, and interactions.
 
-- **Users**: Stores information about users, including their username, profile photo URL, bio, email, and registration date.
-- **Log_in**: Records login activity, including the user's ID, IP address, and login time.
+- `Users`: Stores information about users, including their username, profile photo URL, bio, email, and registration date.
+- `Log_in`: Records login activity, including the user's ID, IP address, and login time.
 
 ### Content Management
 
 This section encompasses tables related to content creation, such as posts, photos, videos, and hashtags.
 
-- **Posts**: Represents individual posts made by users, including captions, location, and creation date.
-- **Photos**: Stores information about uploaded photos, including the photo URL, post ID, and creation date.
-- **Videos**: Stores information about uploaded videos, including the video URL, post ID, and creation date.
-- **Comments**: Stores user comments on posts, including the comment text, post ID, user ID, and creation date.
-- **Hashtags**: Stores unique hashtags used in posts, along with their creation date.
+- `Posts`: Represents individual posts made by users, including captions, location, and creation date.
+- `Photos`: Stores information about uploaded photos, including the photo URL, post ID, and creation date.
+- `Videos`: Stores information about uploaded videos, including the video URL, post ID, and creation date.
+- `Comments`: Stores user comments on posts, including the comment text, post ID, user ID, and creation date.
+- `Hashtags`: Stores unique hashtags used in posts, along with their creation date.
 
 ### Interaction and Engagement
 
 This section focuses on tables related to user interactions, engagement metrics, and social connections.
 
-- **Post_likes**: Records instances of users liking posts, including the user ID, post ID, and creation date.
-- **Comment_likes**: Records instances of users liking comments, including the user ID, comment ID, and creation date.
-- **Follows**: Represents user follow relationships, including the follower ID, followee ID, and creation date.
-- **Hashtag_follow**: Tracks instances of users following hashtags, including the user ID, hashtag ID, and creation date.
-- **Bookmarks**: Stores instances of users bookmarking posts for later reference, including the user ID, post ID, and creation date.
+- `Post_likes`: Records instances of users liking posts, including the user ID, post ID, and creation date.
+- `Comment_likes`: Records instances of users liking comments, including the user ID, comment ID, and creation date.
+- `Follows`: Represents user follow relationships, including the follower ID, followee ID, and creation date.
+- `Hashtag_follow`: Tracks instances of users following hashtags, including the user ID, hashtag ID, and creation date.
+- `Bookmarks`: Stores instances of users bookmarking posts for later reference, including the user ID, post ID, and creation date.
 
 ### Metadata and Logging
 
 This section includes tables for metadata management and logging user activities.
 
-- **Post_tags**: Associates posts with hashtags, allowing users to categorize and discover content.
-- **Bookmark**: Tracks instances of users bookmarking posts for later reference, including the user ID, post ID, and creation date.
+- `Post_tags`: Associates posts with hashtags, allowing users to categorize and discover content.
+- `Bookmark`: Tracks instances of users bookmarking posts for later reference, including the user ID, post ID, and creation date.
 
 ## Conclusion
 
@@ -114,10 +114,10 @@ This section provides a set of sample queries designed to extract insightful inf
 
 ## Sections
 
-- [User Location and Activity]
-- [Hashtag Analysis]
-- [User Engagement]
-- [User Activity and Interaction]
+- **User Location and Activity**
+- **Hashtag Analysis**
+- **User Engagement**
+- **User Activity and Interaction**
 
 --------------------------------------------------------------------------------------------------
 
@@ -125,45 +125,45 @@ This section provides a set of sample queries designed to extract insightful inf
 
 These queries focus on analyzing user activity based on location and engagement metrics.
 
-1. **Location of User**: Retrieves posts made by users in specific locations like Agra, Maharashtra, or West Bengal.
+1. `Location of User`: Retrieves posts made by users in specific locations like Agra, Maharashtra, or West Bengal.
 
-2. **Most Inactive User**: Identifies users who have not made any posts on the platform, helping to identify inactive accounts.
+2. `Most Inactive User`: Identifies users who have not made any posts on the platform, helping to identify inactive accounts.
 
-3. **Average Posts per User**: Calculates the average number of posts made per user on the platform.
+3. `Average Posts per User`: Calculates the average number of posts made per user on the platform.
 
-4. **Number of Logins per User**: Counts the number of login activities performed by each user.
+4. `Number of Logins per User`: Counts the number of login activities performed by each user.
 
 ### Hashtag Analysis
 
 These queries analyze the popularity and usage of hashtags on the platform.
 
-5. **Most Followed Hashtag**: Identifies the top 5 most followed hashtags based on user subscriptions.
+5. `Most Followed Hashtag`: Identifies the top 5 most followed hashtags based on user subscriptions.
 
-6. **Most Used Hashtags**: Lists the top 10 trending hashtags based on the number of times they have been used in posts.
+6. `Most Used Hashtags`: Lists the top 10 trending hashtags based on the number of times they have been used in posts.
 
-7. **Hashtags in Comments**: Searches for comments containing specific words like "good" or "beautiful".
+7. `Hashtags in Comments`: Searches for comments containing specific words like "good" or "beautiful".
 
 ### User Engagement
 
 These queries analyze user engagement metrics such as likes and comments.
 
-8. **Most Liked Posts**: Identifies posts with the highest number of likes, helping to gauge content popularity.
+8. `Most Liked Posts`: Identifies posts with the highest number of likes, helping to gauge content popularity.
 
-9. **User Never Comment**: Identifies users who have never commented on any posts.
+9. `User Never Comment`: Identifies users who have never commented on any posts.
 
-10. **User Not Followed by Anyone**: Identifies users who have not been followed by any other users.
+10. `User Not Followed by Anyone`: Identifies users who have not been followed by any other users.
 
-11. **User Not Following Anyone**: Identifies users who are not following any other users.
+11. `User Not Following Anyone`: Identifies users who are not following any other users.
 
-12. **Posted More Than 5 Times**: Identifies users who have posted more than 5 times on the platform.
+12. `Posted More Than 5 Times`: Identifies users who have posted more than 5 times on the platform.
 
 ### User Activity and Interaction
 
 These queries analyze user activity and interaction patterns on the platform.
 
-13. **Longest Captions in Posts**: Lists the top 5 posts with the longest captions, allowing for analysis of user-generated content.
+13. `Longest Captions in Posts`: Lists the top 5 posts with the longest captions, allowing for analysis of user-generated content.
 
-14. **Followers Count**: Identifies users with more than 40 followers, indicating their influence and popularity on the platform.
+14. `Followers Count`: Identifies users with more than 40 followers, indicating their influence and popularity on the platform.
 
 ## Conclusion
 
