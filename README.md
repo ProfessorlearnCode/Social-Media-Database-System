@@ -15,7 +15,7 @@ This Python-based Database Administrator program provides a user-friendly interf
 
 --------------------------------------------------------------------------------------------------
 
-### Database Administrator - Front End
+### [Database Administrator - Front End](https://github.com/ProfessorlearnCode/Social-Media-Database-System/blob/main/Database_administator.py)
 
 The front end of the program handles user authentication and provides a menu-driven interface for interacting with the database. It includes functions for user authorization, connecting to the server, and displaying a menu with various database management options.
 
@@ -53,7 +53,7 @@ The `main` function serves as the entry point of the program. It first checks fo
 This Database Administrator program provides a robust and intuitive interface for managing databases efficiently. Whether you need to perform basic CRUD operations, execute SQL queries, or export data to external files, this program offers a comprehensive solution for database management tasks.
 
 
-# MSSQL THREADS Database Schema
+# [MSSQL THREADS Database Schema](https://github.com/ProfessorlearnCode/Social-Media-Database-System/blob/main/schema.sql)
 
 ## Overview
 
@@ -106,7 +106,7 @@ This section includes tables for metadata management and logging user activities
 
 The MSSQL Database Schema provided here serves as the foundation for building a social media platform, offering comprehensive data modeling for user management, content creation, interaction, engagement, and metadata management. By following this schema, developers can design and implement a robust database backend capable of supporting various social networking features and functionalities.
 
-# Sample Queries for Database
+# [Sample Queries for Database](https://github.com/ProfessorlearnCode/Social-Media-Database-System/blob/main/queries.sql)
 
 ## Overview
 
