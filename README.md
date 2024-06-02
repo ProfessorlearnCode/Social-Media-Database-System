@@ -1,4 +1,4 @@
-# Database Administrator
+# [Database Administrator](https://github.com/ProfessorlearnCode/Social-Media-Database-System/blob/main/Database_administator.py)
 
 ## Overview
 
@@ -15,7 +15,7 @@ This Python-based Database Administrator program provides a user-friendly interf
 
 --------------------------------------------------------------------------------------------------
 
-### [Database Administrator - Front End](https://github.com/ProfessorlearnCode/Social-Media-Database-System/blob/main/Database_administator.py)
+### Database Administration
 
 The front end of the program handles user authentication and provides a menu-driven interface for interacting with the database. It includes functions for user authorization, connecting to the server, and displaying a menu with various database management options.
 
