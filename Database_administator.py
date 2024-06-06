@@ -44,6 +44,9 @@ def connection_to_server():
     :return: The `Connection_string` object is being returned from the `connection_to_server` function.
     """
     try:
+        print("--------------------------------------------------------------")
+        print("Connecting to the Server")
+        print("--------------------------------------------------------------")
         Connection_string = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};' +
                                            'Server=DESKTOP-95OCRCQ;' +
                                            'Trusted_Connection=yes;')
@@ -66,6 +69,10 @@ def show_databases(Connection_str):
     server. This connection string typically includes details such as the server address, database name,
     authentication credentials (username and password), and any other required parameters
     """
+    print("--------------------------------------------------------------")
+    print("Showing Present Databases")
+    print("--------------------------------------------------------------")
+    
     cursor = Connection_str.cursor()
     
     SQL_query = "SELECT name FROM sys.databases"
@@ -90,7 +97,9 @@ def change_database(connection_str):
     :return: The function `change_database` returns the name of the database that the connection has
     been switched to.
     """
-    
+    print("--------------------------------------------------------------")
+    print("Changing currently connected database")
+    print("--------------------------------------------------------------")
     cursor = connection_str.cursor()
     SQL_QUERY_DB = f"SELECT DB_NAME() as CurrentDB"
     cursor.execute(SQL_QUERY_DB)
@@ -121,6 +130,9 @@ def show_tables(connection_str):
     address, database name, authentication credentials, and any other required parameters to
     """
     try:
+        print("--------------------------------------------------------------")
+        print("Showing tables present in the Current database")
+        print("--------------------------------------------------------------")
         cursor = connection_str.cursor()
         
         cursor.execute("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE'")
@@ -147,6 +159,9 @@ def create_table(connection_str):
     the database driver, server address, port, database name, username, and password
     """
     try:
+        print("--------------------------------------------------------------")
+        print("Creating a new table")
+        print("--------------------------------------------------------------")
         cursor = connection_str.cursor()
         
         table_name = input("Insert the name of the table you want to create: ")
@@ -186,6 +201,9 @@ def show_column_names(connection_str, table_name):
     message indicating the failure.
     """
     try:
+        print("--------------------------------------------------------------")
+        print("Displaying attributes of a table")
+        print("--------------------------------------------------------------")
       
         cursor = connection_str.cursor()
         DUMMY_SQL_QUERY = f"SELECT * FROM {table_name} WHERE 1=0"
@@ -213,6 +231,9 @@ def Insertion(connection_str):
     required to connect to the database. It is typically
     """
     try:
+        print("--------------------------------------------------------------")
+        print("Inserting values in the table")
+        print("--------------------------------------------------------------")
         table_name = input("Enter the name of the table you want to insert into? ")
         attribute_list = show_column_names(connection_str, table_name)
         
@@ -251,6 +272,9 @@ def Updatation(connection_str):
     they want to update and the update script they want to execute on that table. The function then
     executes the update script
     """
+        print("--------------------------------------------------------------")
+        print("Updating/Altering data in the database")
+        print("--------------------------------------------------------------")
     try:
         table_name = input("Enter the name of the table you want to update: ")
         update_instruction = input("Insert Update script: ")
@@ -279,6 +303,9 @@ def deletion(connection_str):
     operation will be performed
     """
     try:
+        print("--------------------------------------------------------------")
+        print("Deleting data in the database")
+        print("--------------------------------------------------------------")
         table_name = input("Enter the name of the table you want to delete from: ")
         condition = input("Enter the condition for deletion: ")
         
@@ -307,6 +334,9 @@ def table_truncation(connection_str):
     used to create a connection to the database in order to perform operations
     """
     table_trunc = input("Enter the name of the table you want to truncate: ")
+    print("--------------------------------------------------------------")
+    print("Truncating a table data")
+    print("--------------------------------------------------------------")
     
     cursor = connection_str.cursor()
     try:
@@ -338,6 +368,9 @@ def load_table_data(connection_str, table_name):
     table in the database.
     """
     try:
+        print("--------------------------------------------------------------")
+        print("Displaying table contents")
+        print("--------------------------------------------------------------")
         query = f"SELECT * FROM {table_name}"
         df = pd.read_sql(query, connection_str)
         return df
@@ -356,6 +389,9 @@ def drop_table(connection_str):
     to establish a connection to the database
     """
     try:
+        print("--------------------------------------------------------------")
+        print("Dropping a table in the database")
+        print("--------------------------------------------------------------")
         print("WARNING: Drop a table with a defined PK or FK will result in an error\nConfigure in SSMS")
         table_name = input("Enter the name of the table you want to drop? ")
         cursor = connection_str.cursor()
@@ -378,9 +414,12 @@ def open_sql_file(connection_str):
     :param connection_str: The `connection_str` parameter in the `open_sql_file` function is expected to
     be a connection string that is used to establish a connection to a database. This connection string
     is typically used to connect to a database using a specific driver, server address, database name,
-    and authentication details. It is
+    and authentication details. 
     """
     try:
+        print("--------------------------------------------------------------")
+        print("Opening SQL file")
+        print("--------------------------------------------------------------")
         file_path = input("Enter the path of the SQL file you want to execute: ")
         with open(file_path, 'r') as file:
             sql_commands = file.read()
@@ -414,10 +453,12 @@ def export_to_csv(connection_str, table_name, file_name):
     :param table_name: The `export_to_csv` function takes three parameters:
     :param file_name: The `export_to_csv` function you provided seems to be incomplete. It looks like
     you were about to provide some information about the parameters `connection_str`, `table_name`, and
-    `file_name`, but the description is cut off. Could you please provide more details or let me know
-    how I can
+    `file_name`
     """
     try:
+        print("--------------------------------------------------------------")
+        print("Exporting table to CSV")
+        print("--------------------------------------------------------------")
         df = load_table_data(connection_str, table_name)
         if df is not None:
             df.to_csv(file_name, index=False)
