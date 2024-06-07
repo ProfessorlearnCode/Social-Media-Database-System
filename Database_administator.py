@@ -6,13 +6,7 @@ import sys
 import pwinput
 
 def user_authorization():
-    """
-    The function `user_authorization` allows a user to input their username and password for
-    authorization, with a limit of 3 attempts before exiting the program.
-    :return: The function `user_authorization()` returns a boolean value `True` if the user enters the
-    correct username ('admin' or 'professor') and password (0000). If the user fails to authenticate
-    within 3 attempts, the program will exit without returning any value.
-    """
+   
     print("--------------------------------------------------------------")
     print("USER AUTHORIZATION")
     print("--------------------------------------------------------------")
@@ -39,10 +33,7 @@ def user_authorization():
     sys.exit()        
 
 def connection_to_server():
-    """
-    The function `connection_to_server` establishes a connection to a SQL Server using pyodbc in Python.
-    :return: The `Connection_string` object is being returned from the `connection_to_server` function.
-    """
+   
     try:
         print("--------------------------------------------------------------")
         print("Connecting to the Server")
@@ -60,15 +51,7 @@ def connection_to_server():
         print("Connection Failed to the server ❌", error_message)
 
 def show_databases(Connection_str):
-    """
-    The function `show_databases` retrieves and displays the names of databases in a given server using
-    a SQL query.
-    
-    :param Connection_str: The `Connection_str` parameter in the `show_databases` function should be a
-    connection string that contains the necessary information to establish a connection to a database
-    server. This connection string typically includes details such as the server address, database name,
-    authentication credentials (username and password), and any other required parameters
-    """
+ 
     print("--------------------------------------------------------------")
     print("Showing Present Databases")
     print("--------------------------------------------------------------")
@@ -86,17 +69,7 @@ def show_databases(Connection_str):
     cursor.close()
                    
 def change_database(connection_str):
-    """
-    The function `change_database` switches the connection to a different database using the provided
-    connection string in Python.
-    
-    :param connection_str: The `connection_str` parameter in the `change_database` function is expected
-    to be a connection string that contains the necessary information to establish a connection to a
-    database. This connection string typically includes details such as the database server address,
-    database name, authentication credentials, and any other required parameters to connect to
-    :return: The function `change_database` returns the name of the database that the connection has
-    been switched to.
-    """
+  
     print("--------------------------------------------------------------")
     print("Changing currently connected database")
     print("--------------------------------------------------------------")
@@ -120,15 +93,7 @@ def change_database(connection_str):
         print("Failed to switch to the database ❌", error_message)
 
 def show_tables(connection_str):
-    """
-    The function `show_tables` retrieves and displays the names of all base tables in a database using
-    the provided connection string.
-    
-    :param connection_str: The `connection_str` parameter in the `show_tables` function is expected to
-    be a connection string that contains the necessary information to establish a connection to a
-    database. This connection string typically includes details such as the database driver, server
-    address, database name, authentication credentials, and any other required parameters to
-    """
+
     try:
         print("--------------------------------------------------------------")
         print("Showing tables present in the Current database")
@@ -149,15 +114,7 @@ def show_tables(connection_str):
         print("Failed to retrieve the variable ❌", error_message)
 
 def create_table(connection_str):
-    """
-    The function `create_table` takes a connection string as input, prompts the user to input a table
-    name and attributes, then creates a table with the specified attributes in the database connected to
-    the given connection string.
-    
-    :param connection_str: The `connection_str` parameter is typically a connection string that contains
-    the information needed to establish a connection to a database. It usually includes details such as
-    the database driver, server address, port, database name, username, and password
-    """
+
     try:
         print("--------------------------------------------------------------")
         print("Creating a new table")
@@ -185,21 +142,7 @@ def create_table(connection_str):
         print("Failed to create your specified table ❌", error_message)
         
 def show_column_names(connection_str, table_name):
-    """
-    The function `show_column_names` retrieves the column names of a specified table in a database using
-    a given connection string.
-    
-    :param connection_str: The `connection_str` parameter is typically a connection string that contains
-    the information needed to connect to a database. It usually includes details such as the database
-    driver, server address, port, database name, username, and password. This string is used to
-    establish a connection to the database before executing any SQL
-    :param table_name: The `table_name` parameter in the `show_column_names` function is used to specify
-    the name of the table for which you want to retrieve the column names. This function will query the
-    database to get the column names of the specified table
-    :return: The `show_column_names` function returns a list of column names from the specified table in
-    the database connection. If an error occurs during the execution, it returns a tuple with an error
-    message indicating the failure.
-    """
+
     try:
         print("--------------------------------------------------------------")
         print("Displaying attributes of a table")
@@ -221,15 +164,7 @@ def show_column_names(connection_str, table_name):
         return ("Failed to retrive the specified database ❌", error_message)
         
 def Insertion(connection_str):
-    """
-    The `Insertion` function in Python allows users to insert values into a specified table in a
-    database, handling cases where a timestamp column is present or not.
-    
-    :param connection_str: The `connection_str` parameter in the `Insertion` function is a connection
-    string that is used to establish a connection to a database. This connection string contains
-    information such as the database driver, server name, database name, authentication details, etc.,
-    required to connect to the database. It is typically
-    """
+
     try:
         print("--------------------------------------------------------------")
         print("Inserting values in the table")
@@ -263,18 +198,10 @@ def Insertion(connection_str):
         print("Failed to insert values in the table ❌!", error)
 
 def Updatation(connection_str):
-    """
-    The function `Updatation` takes user input for table name and update script, then executes an SQL
-    query to update the specified table in the database.
-    
-    :param connection_str: The function `Updatation` takes a connection string as a parameter, which is
-    used to establish a connection to a database. The user is prompted to enter the name of the table
-    they want to update and the update script they want to execute on that table. The function then
-    executes the update script
-    """
-        print("--------------------------------------------------------------")
-        print("Updating/Altering data in the database")
-        print("--------------------------------------------------------------")
+
+    print("--------------------------------------------------------------")
+    print("Updating/Altering data in the database")
+    print("--------------------------------------------------------------")
     try:
         table_name = input("Enter the name of the table you want to update: ")
         update_instruction = input("Insert Update script: ")
@@ -293,15 +220,7 @@ def Updatation(connection_str):
         print("Failed to update your query ❌", error)
 
 def deletion(connection_str):
-    """
-    The `deletion` function takes a connection string as input, prompts the user for a table name and
-    deletion condition, executes a SQL DELETE query using the provided inputs, and commits the
-    transaction if successful.
-    
-    :param connection_str: The `deletion` function you provided takes a connection string as a
-    parameter. This connection string is used to establish a connection to a database where the deletion
-    operation will be performed
-    """
+
     try:
         print("--------------------------------------------------------------")
         print("Deleting data in the database")
@@ -324,15 +243,7 @@ def deletion(connection_str):
         print("Failed to delete from the specifed table ❌!", error)
 
 def table_truncation(connection_str):
-    """
-    The function `table_truncation` truncates a specified table in a database connection using SQL
-    `TRUNCATE TABLE` or `DELETE FROM` based on the provided table name.
-    
-    :param connection_str: The `connection_str` parameter is typically a connection string that contains
-    information needed to establish a connection to a database. It includes details such as the database
-    driver, server address, database name, authentication credentials, etc. This connection string is
-    used to create a connection to the database in order to perform operations
-    """
+
     table_trunc = input("Enter the name of the table you want to truncate: ")
     print("--------------------------------------------------------------")
     print("Truncating a table data")
@@ -352,21 +263,7 @@ def table_truncation(connection_str):
         cursor.close()
 
 def load_table_data(connection_str, table_name):
-    """
-    The function `load_table_data` reads data from a specified table in a database using a given
-    connection string.
     
-    :param connection_str: The `connection_str` parameter in the `load_table_data` function is typically
-    a string that contains the connection information needed to connect to a database. This information
-    usually includes details such as the database type, host, port, database name, username, and
-    password
-    :param table_name: The `table_name` parameter in the `load_table_data` function is used to specify
-    the name of the table from which you want to load data. This function will construct a SQL query to
-    select all columns from the specified table and then load the data into a pandas DataFrame using the
-    provided `connection
-    :return: The function `load_table_data` returns a DataFrame containing the data from the specified
-    table in the database.
-    """
     try:
         print("--------------------------------------------------------------")
         print("Displaying table contents")
@@ -379,15 +276,7 @@ def load_table_data(connection_str, table_name):
         print("Failed to load table data ❌!", error)
 
 def drop_table(connection_str):
-    """
-    The function `drop_table` drops a specified table in a database connection, handling potential
-    errors related to primary and foreign keys.
-    
-    :param connection_str: The `connection_str` parameter is typically a connection string that contains
-    the information needed to connect to a database. It usually includes details such as the database
-    driver, server name, database name, authentication credentials, and any other necessary parameters
-    to establish a connection to the database
-    """
+
     try:
         print("--------------------------------------------------------------")
         print("Dropping a table in the database")
@@ -407,15 +296,7 @@ def drop_table(connection_str):
         print("Failed to drop the specified table ❌!", error)
 
 def open_sql_file(connection_str):
-    """
-    The function `open_sql_file` reads and executes SQL commands from a specified file using a provided
-    database connection string.
-    
-    :param connection_str: The `connection_str` parameter in the `open_sql_file` function is expected to
-    be a connection string that is used to establish a connection to a database. This connection string
-    is typically used to connect to a database using a specific driver, server address, database name,
-    and authentication details. 
-    """
+
     try:
         print("--------------------------------------------------------------")
         print("Opening SQL file")
@@ -443,18 +324,7 @@ def open_sql_file(connection_str):
         print(f"An error occurred: {e}")
 
 def export_to_csv(connection_str, table_name, file_name):
-    """
-    This function exports data from a database table to a CSV file.
-    
-    :param connection_str: A connection string is a string that contains the information needed to
-    connect to a database. It typically includes details such as the database server name, database
-    name, authentication credentials, and any other necessary parameters to establish a connection to
-    the database
-    :param table_name: The `export_to_csv` function takes three parameters:
-    :param file_name: The `export_to_csv` function you provided seems to be incomplete. It looks like
-    you were about to provide some information about the parameters `connection_str`, `table_name`, and
-    `file_name`
-    """
+  
     try:
         print("--------------------------------------------------------------")
         print("Exporting table to CSV")
@@ -469,14 +339,8 @@ def export_to_csv(connection_str, table_name, file_name):
         
         
 def main():
-    """
-    The main function is the entry point of the program where the execution starts.
-    """
+
     os.system('cls')
-    
-# This Python code is a console-based database manager program. It first checks for user authorization
-# using the `user_authorization()` function. If the user is authorized, it clears the screen and
-# displays a menu with various database management options.
     
     if(user_authorization()):
         os.system('cls')
