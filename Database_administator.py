@@ -5,6 +5,26 @@ import os
 import sys
 import pwinput
 
+def custom_server_connect():  
+    try:
+        print("--------------------------------------------------------------")
+        print("Custom server Connection")
+        print("--------------------------------------------------------------")
+        server_name = input("Enter the name of the server: ")
+        connection_string = pyodbc.connect('Driver = {ODBC Driver 17 for SQL Server};' +
+                                           f'Server = {server_name};' +
+                                           'Trusted_Connection = yes;')
+        
+        time.sleep(1)
+        print("\nConnection to Server Successful 👍!\n")
+        
+        return connection_string
+      
+    except pyodbc.Error as error_message:
+        print("Connection Failed to the server ❌\n Please check your input", error_message)
+  
+
+
 def user_authorization():
    
     print("--------------------------------------------------------------")
@@ -375,8 +395,11 @@ def main():
         
             match user_insert:
                 case '1':
-                    connection_str = connection_to_server()
-                    print("--------------------------------------------------------------\n")                   
+                  try:
+                     connection_str = connection_to_server()
+                  except:
+                     connection_str = custom_server_connect()
+                  print("--------------------------------------------------------------\n")                   
                 case '2':
                     try:
                         print('\n')
