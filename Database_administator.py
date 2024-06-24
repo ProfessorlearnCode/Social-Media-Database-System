@@ -1,34 +1,14 @@
 import pyodbc
 import pandas as pd
-import time
 import os
 import sys
+import time
 import pwinput
-
-def custom_server_connect():  
-    try:
-        print("--------------------------------------------------------------")
-        print("Custom server Connection")
-        print("--------------------------------------------------------------")
-        server_name = input("Enter the name of the server: ")
-        connection_string = pyodbc.connect('Driver = {ODBC Driver 17 for SQL Server};' +
-                                           f'Server = {server_name};' +
-                                           'Trusted_Connection = yes;')
-        
-        time.sleep(1)
-        print("\nConnection to Server Successful 👍!\n")
-        
-        return connection_string
-      
-    except pyodbc.Error as error_message:
-        print("Connection Failed to the server ❌\n Please check your input", error_message)
-  
-
+import socket
 
 def user_authorization():
-   
     print("--------------------------------------------------------------")
-    print("USER AUTHORIZATION")
+    print("USER AUTHORIZATION 🔐")
     print("--------------------------------------------------------------")
     
     authorization_counter = 0
@@ -36,8 +16,8 @@ def user_authorization():
         try:
             username = input("Enter your username: ")
             password = int(pwinput.pwinput('Enter your password: ','*'))
-            if (username == 'admin' and password == 0000) and (username == 'professor' and password == 0000):
-                print(f"Welcome to Database Administrator: {username}")
+            if (username == 'prof' and password == 1111) or (username == 'areeb' and password == 1234):
+                print(f"Welcome to Database Administrator: Professor 👋")
                 return True
             else:
                 print("\nIncorrect Username or Password. Please try again.")
@@ -52,28 +32,28 @@ def user_authorization():
     print("Too many attempts!\nExiting the program")
     sys.exit()        
 
-def connection_to_server():
-   
+def connect_to_server():
     try:
-        print("--------------------------------------------------------------")
-        print("Connecting to the Server")
-        print("--------------------------------------------------------------")
-        Connection_string = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};' +
-                                           'Server=DESKTOP-95OCRCQ;' +
-                                           'Trusted_Connection=yes;')
+        server_name = socket.gethostname()
         
-        time.sleep(1)
-        print("\nConnection to Server Successful 👍!\n")
+        connection_string = pyodbc.connect(
+            'Driver={ODBC Driver 17 for SQL Server};' +
+            f'Server={server_name};' +
+            'Trusted_Connection=yes;'
+        )
+        print(f"\nConnection to Server '{server_name}' Successful 👍!\n")
         
-        return Connection_string
-        
+        return connection_string
+    
+    
     except pyodbc.Error as error_message:
-        print("Connection Failed to the server ❌", error_message)
+        print(f"Connection to Server '{server_name}' Failed ❌: {error_message}")
+        return None
 
 def show_databases(Connection_str):
- 
+
     print("--------------------------------------------------------------")
-    print("Showing Present Databases")
+    print("Showing Present Databases 📅")
     print("--------------------------------------------------------------")
     
     cursor = Connection_str.cursor()
@@ -87,36 +67,12 @@ def show_databases(Connection_str):
     for row in rows:
         print('->', row[0])
     cursor.close()
-                   
-def change_database(connection_str):
-  
-    print("--------------------------------------------------------------")
-    print("Changing currently connected database")
-    print("--------------------------------------------------------------")
-    cursor = connection_str.cursor()
-    SQL_QUERY_DB = f"SELECT DB_NAME() as CurrentDB"
-    cursor.execute(SQL_QUERY_DB)
-    current_DB = cursor.fetchone()
-    print(f"Currently Connected Database: {current_DB[0]}")
-    database_name = input("Enter the name of the database you want to switch to: ")
-    try:
-        SQL_QUERY = f"USE {database_name}"
-        cursor.execute(SQL_QUERY)
-        
-        time.sleep(1)
-        print(f"Successfully Connected to {database_name} 👍")
-        
-        cursor.close()
-        return database_name
-
-    except pyodbc.Error as error_message:
-        print("Failed to switch to the database ❌", error_message)
 
 def show_tables(connection_str):
 
     try:
         print("--------------------------------------------------------------")
-        print("Showing tables present in the Current database")
+        print("Showing tables present in the Current database 📅")
         print("--------------------------------------------------------------")
         cursor = connection_str.cursor()
         
@@ -132,12 +88,35 @@ def show_tables(connection_str):
         
     except pyodbc.Error as error_message:
         print("Failed to retrieve the variable ❌", error_message)
+                   
+def change_database(connection_str):
+
+    print("--------------------------------------------------------------")
+    print("Changing currently connected database 📅")
+    print("--------------------------------------------------------------")
+    cursor = connection_str.cursor()
+    SQL_QUERY_DB = f"SELECT DB_NAME() as CurrentDB"
+    cursor.execute(SQL_QUERY_DB)
+    current_DB = cursor.fetchone()
+    print(f"Currently Connected Database: {current_DB[0]}")
+    database_name = input("Enter the name of the database you want to switch to: ")
+    try:
+        SQL_QUERY = f"USE {database_name}"
+        cursor.execute(SQL_QUERY)
+        
+        print(f"Successfully Connected to {database_name} 👍")
+        
+        cursor.close()
+        return database_name
+
+    except pyodbc.Error as error_message:
+        print("Failed to switch to the database ❌", error_message)
 
 def create_table(connection_str):
 
     try:
         print("--------------------------------------------------------------")
-        print("Creating a new table")
+        print("Creating a new table 🆕")
         print("--------------------------------------------------------------")
         cursor = connection_str.cursor()
         
@@ -162,7 +141,6 @@ def create_table(connection_str):
         print("Failed to create your specified table ❌", error_message)
         
 def show_column_names(connection_str, table_name):
-
     try:
         print("--------------------------------------------------------------")
         print("Displaying attributes of a table")
@@ -184,29 +162,42 @@ def show_column_names(connection_str, table_name):
         return ("Failed to retrive the specified database ❌", error_message)
         
 def Insertion(connection_str):
-
     try:
         print("--------------------------------------------------------------")
-        print("Inserting values in the table")
+        print("Inserting values in the table 👇")
         print("--------------------------------------------------------------")
-        table_name = input("Enter the name of the table you want to insert into? ")
+        table_name = input("Enter the name of the table you want to insert into: ")
+        print("--------------------------------------------------------------")
+        print("Displaying attributes of a table")
+        print("--------------------------------------------------------------")
         attribute_list = show_column_names(connection_str, table_name)
         
         cursor = connection_str.cursor()
         
-        if 'CREATED_AT' in attribute_list:
-            Values = input(f"Enter Values W.R.T Attributes:\n{'\t|\t'.join(attribute_list)}\n(separated by commas)\nValues: ")
+        # Remove identity column from attributes and prompt user
+        identity_column = 'user_id'
+        non_identity_attributes = [attr for attr in attribute_list if attr != identity_column]
+
+        values = input(f"Enter Values W.R.T Attributes:\n{'\t|\t'.join(non_identity_attributes)}\n(separated by commas)\nValues: ")
+        
+        if 'created_at' in non_identity_attributes:
+            values_list = values.split(',')
+            created_at_index = non_identity_attributes.index('created_at')
+            if values_list[created_at_index].strip() == "''":
+                values_list[created_at_index] = 'GETDATE()'
+            else:
+                values_list[created_at_index] = f"'{values_list[created_at_index].strip()}'"
+            values = ','.join(values_list)
             SQL_QUERY_wTime = f'''
-                                INSERT INTRO {table_name} ({', '.join(attribute_list)})
-                                VALUES ({Values}, GETDATE())
-                                '''
+                INSERT INTO {table_name} ({', '.join(non_identity_attributes)})
+                VALUES ({values})
+            '''
             cursor.execute(SQL_QUERY_wTime)
-            
         else:    
-            Values = input(f"Enter Values W.R.T Attributes:\n{'\t|\t'.join(attribute_list)}\n(separated by commas)\nValues: ")
-            SQL_QUERY_woTime = f'''INSERT INTO {table_name} ({', '.join(attribute_list)})
-                            VALUES ({Values})
-                        '''
+            SQL_QUERY_woTime = f'''
+                INSERT INTO {table_name} ({', '.join(non_identity_attributes)})
+                VALUES ({values})
+            '''
             cursor.execute(SQL_QUERY_woTime)
         
         print("Values inserted Successfully 👍!")   
@@ -216,11 +207,10 @@ def Insertion(connection_str):
         
     except pyodbc.Error as error:
         print("Failed to insert values in the table ❌!", error)
-
+              
 def Updatation(connection_str):
-
     print("--------------------------------------------------------------")
-    print("Updating/Altering data in the database")
+    print("Updating/Altering data in the database 🆙")
     print("--------------------------------------------------------------")
     try:
         table_name = input("Enter the name of the table you want to update: ")
@@ -243,7 +233,7 @@ def deletion(connection_str):
 
     try:
         print("--------------------------------------------------------------")
-        print("Deleting data in the database")
+        print("Deleting data in the database ✂")
         print("--------------------------------------------------------------")
         table_name = input("Enter the name of the table you want to delete from: ")
         condition = input("Enter the condition for deletion: ")
@@ -266,7 +256,7 @@ def table_truncation(connection_str):
 
     table_trunc = input("Enter the name of the table you want to truncate: ")
     print("--------------------------------------------------------------")
-    print("Truncating a table data")
+    print("Truncating a table data 💀")
     print("--------------------------------------------------------------")
     
     cursor = connection_str.cursor()
@@ -283,10 +273,10 @@ def table_truncation(connection_str):
         cursor.close()
 
 def load_table_data(connection_str, table_name):
-    
+
     try:
         print("--------------------------------------------------------------")
-        print("Displaying table contents")
+        print("Displaying table contents 💻")
         print("--------------------------------------------------------------")
         query = f"SELECT * FROM {table_name}"
         df = pd.read_sql(query, connection_str)
@@ -296,10 +286,9 @@ def load_table_data(connection_str, table_name):
         print("Failed to load table data ❌!", error)
 
 def drop_table(connection_str):
-
     try:
         print("--------------------------------------------------------------")
-        print("Dropping a table in the database")
+        print("Dropping a table in the database 📩")
         print("--------------------------------------------------------------")
         print("WARNING: Drop a table with a defined PK or FK will result in an error\nConfigure in SSMS")
         table_name = input("Enter the name of the table you want to drop? ")
@@ -319,7 +308,7 @@ def open_sql_file(connection_str):
 
     try:
         print("--------------------------------------------------------------")
-        print("Opening SQL file")
+        print("Opening SQL file 📂")
         print("--------------------------------------------------------------")
         file_path = input("Enter the path of the SQL file you want to execute: ")
         with open(file_path, 'r') as file:
@@ -344,10 +333,9 @@ def open_sql_file(connection_str):
         print(f"An error occurred: {e}")
 
 def export_to_csv(connection_str, table_name, file_name):
-  
     try:
         print("--------------------------------------------------------------")
-        print("Exporting table to CSV")
+        print("Exporting table to CSV 📤")
         print("--------------------------------------------------------------")
         df = load_table_data(connection_str, table_name)
         if df is not None:
@@ -359,10 +347,10 @@ def export_to_csv(connection_str, table_name, file_name):
         
         
 def main():
-
-    os.system('cls')
-    
+    os.system('cls')   
     if(user_authorization()):
+        print("Access Granted! 🔓")
+        time.sleep(2)
         os.system('cls')
         print('''
             Welcome to Database manager
@@ -394,43 +382,49 @@ def main():
             print("--------------------------------------------------------------\n")
         
             match user_insert:
+                        
                 case '1':
-                  try:
-                     connection_str = connection_to_server()
-                  except:
-                     connection_str = custom_server_connect()
-                  print("--------------------------------------------------------------\n")                   
+                    try:
+                        connection_str = connect_to_server()
+                        
+                    except pyodbc.Error as error_message:
+                        print("Failed to connect to the server ❌!")     
+                    print("--------------------------------------------------------------\n")                    
                 case '2':
                     try:
                         print('\n')
                         show_databases(connection_str)
                         print("--------------------------------------------------------------\n")
                         
-                    except pyodbc.Error or UnboundLocalError as error_message:
-                        print("Error Occurred\nPlease connect to the server first\n", error_message)
+                    except UnboundLocalError or pyodbc.Error as error_message:
+                        print("Error Occurred while displaying the databases\nTIP: Please connect to the server first\n" + "Database Error 💔: " ,error_message)
+                        
                         print("--------------------------------------------------------------\n")
                 case '3':
                     try:
                         change_database(connection_str)
                         print("--------------------------------------------------------------\n")
                         
-                    except pyodbc.Error or UnboundLocalError as error_message:
-                        print("Error Occurred\nPlease connect to the server first\n", error_message)                
+                    except UnboundLocalError or pyodbc.Error as error_message:
+                        print("Error Occurred while changing the database\nTIP: Please connect to the server first\n" + "Database Error 💔: " ,error_message)
+
                         print("--------------------------------------------------------------\n")               
                 case '4':
                     try:
                         show_tables(connection_str)
                         print("--------------------------------------------------------------\n")
                         
-                    except pyodbc.Error or UnboundLocalError as error_message:
-                        print("Error Occurred\nPlease connect to the server first\n", error_message)                
+                    except UnboundLocalError or pyodbc.Error as error_message:
+                        print("Error Occurred while showing the tables within the database\nTIP: Please connect to the server first\n" + "Database Error 💔: " ,error_message)
+
                         print("--------------------------------------------------------------\n")
                 case '5':
                     try:
                         create_table(connection_str)
                         print("--------------------------------------------------------------\n")
-                    except pyodbc.Error or UnboundLocalError as error_message:
-                        print("Error Occurred\nPlease connect to the server first\n", error_message)
+                    except UnboundLocalError or pyodbc.Error as error_message:
+                        print("Error Occurred while creating a table in the database\nTIP: Please connect to the server first\n" + "Database Error 💔: " ,error_message)
+
                         print("--------------------------------------------------------------\n")
                 case '6':
                     try:
@@ -440,56 +434,63 @@ def main():
                         print(f"{Table_DATA}")
                         print("--------------------------------------------------------------\n")
                         
-                    except pyodbc.Error or UnboundLocalError as error_message:
-                        print("Error Occurred\nPlease connect to the server first\n", error_message)                
+                    except UnboundLocalError or pyodbc.Error as error_message:
+                        print("Error Occurred while viewing the contents of the database\nTIP: Please connect to the server first\n" + "Database Error 💔: " ,error_message)
+
                         print("--------------------------------------------------------------\n")
                 case '7':
                     try: 
                         Insertion(connection_str)
                         print("--------------------------------------------------------------\n")
                         
-                    except pyodbc.Error or UnboundLocalError as error_message:
-                        print("Error Occurred\nPlease connect to the server first\n", error_message)
+                    except UnboundLocalError or pyodbc.Error as error_message:
+                        print("Error Occurred while inserting a value in the table\nTIP: Please connect to the server first\n" + "Database Error 💔: " ,error_message)
+
                         print("--------------------------------------------------------------\n")
                 case '8':
                     try:
                         Updatation(connection_str)
                         print("--------------------------------------------------------------\n")
                         
-                    except pyodbc.Error or UnboundLocalError as error_message:
-                        print("Error Occurred\nPlease connect to the server first\n", error_message)
+                    except UnboundLocalError or pyodbc.Error as error_message:
+                        print("Error Occurred while updating a value in the table\nTIP: Please connect to the server first\n" + "Database Error 💔: " ,error_message)
+
                         print("--------------------------------------------------------------\n")
                 case '9':
                     try:
                         deletion(connection_str)
                         print("--------------------------------------------------------------\n")
                         
-                    except pyodbc.Error as error_message:
-                        print("Error Occurred\nPlease connect to the server first\n", error_message)                
+                    except UnboundLocalError or pyodbc.Error as error_message:
+                        print("Error Occurred while deleting a value in the table\nTIP: Please connect to the server first\n" + "Database Error 💔: " ,error_message)
+
                         print("--------------------------------------------------------------\n")
                 case '10':
                     try:
                         table_truncation(connection_str)
                         print("--------------------------------------------------------------\n")
                         
-                    except pyodbc.Error or UnboundLocalError as error_message:
-                        print("Error Occurred\nPlease connect to the server first\n", error_message)
+                    except UnboundLocalError or pyodbc.Error as error_message:
+                        print("Error Occurred while truncating the table\nTIP: Please connect to the server first\n" + "Database Error 💔: " ,error_message)
+
                         print("--------------------------------------------------------------\n")
                 case '11':
                     try:
                         drop_table(connection_str)
                         print("--------------------------------------------------------------\n")
                     
-                    except pyodbc.Error or UnboundLocalError as error_message:
-                        print("Error Occurred\nPlease connect to the server first\n", error_message)
+                    except UnboundLocalError or pyodbc.Error as error_message:
+                        print("Error Occurred while droping the table\nTIP: Please connect to the server first\n" + "Database Error 💔: " ,error_message)
+
                         print("--------------------------------------------------------------\n")
                 case '12':
                     try:
                         open_sql_file(connection_str)
                         print("--------------------------------------------------------------\n")
                         
-                    except pyodbc.Error or UnboundLocalError as error_message:
-                        print("Error Occurred\nPlease connect to the server first\n", error_message)
+                    except UnboundLocalError or pyodbc.Error as error_message:
+                        print("Error Occurred while opening the sql file\nTIP: Please connect to the server first\n" + "Database Error 💔: " ,error_message)
+
                         print("--------------------------------------------------------------\n")
                 case '13':
                     try:
@@ -498,13 +499,21 @@ def main():
                         export_to_csv(connection_str, table_name, file_name)
                         print("--------------------------------------------------------------\n")
                         
-                    except pyodbc.Error or UnboundLocalError as error_message:
-                        print("Error Occurred\nPlease connect to the server first\n", error_message)                
+                    except UnboundLocalError or pyodbc.Error as error_message:
+                        print("Error Occurred while exporting to CSV\nTIP: Please connect to the server first\n" + "Database Error 💔: " ,error_message)
+
                         print("--------------------------------------------------------------\n")
                 case 'q':
-                    connection_str.close()
-                    time.sleep(1.5)
-                    print("Connection Terminated!\nExiting the program")
+                    try:
+                        connection_str.close()
+                        print("Connection Terminated!\nExiting the program")
+                        time.sleep(2)
+                    except UnboundLocalError or pyodbc.Error as error_message:
+                        connection_str.close()
+                        print("Connection Terminated!\nExiting the program")
+                        time.sleep(2)
+                        
+                        
                     print("--------------------------------------------------------------\n")
                     sys.exit()               
                 case 'm':
